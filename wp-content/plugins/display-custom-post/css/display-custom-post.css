@@ -1,0 +1,109 @@
+/*
+ * Display Custom Post WordPress Plugin CSS For Frontend Custom Post Display 
+*/  
+
+/* 
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+.custom-post-block {
+    width: 50%;
+    display: inline-block;
+    padding: 0 5px;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+    margin-bottom: 10px;
+}
+.innerwrapper {
+    padding: 10px;  
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	width: 100%;
+}
+.custom-post-block .innerwrapper h2 {
+    margin: 10px 0;
+    font-size: 17px;
+    line-height: 23px;
+}
+.custom-post-block {
+    width: 50%;
+    display: inline-block;
+    padding: 0 10px;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+    margin-bottom: 20px;
+}
+.custom-post-block h2 a {
+    color: #405e77;
+    text-decoration: none;
+	transition: all 0.3s ease-in;
+	-moz-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s ease-in; 
+}
+.custom-post-block h2 a:hover,
+.custom-post-block h2 a:active{
+	opacity: 0.8;
+	color: #405e77;
+}
+.custom-post-block h2 a:hover{
+	color: #222;
+}
+.custom-post-block .innerwrapper p {
+    margin-bottom: 15px;
+}
+.custom-post-block a.read-more.button {
+    color: #fff;
+    text-decoration: none;
+    background-color: #405e77;
+    padding: 8px 11px;
+    box-sizing: border-box;
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+    border-radius: 4px;
+	-moz-border-radius: 4px; 
+	-webkit-border-radius: 4px; 
+    font-size: 14px;
+    display: inline-block;
+	transition: all 0.3s ease-in;
+	-moz-transition: all 0.3s ease-in; 
+	-webkit-transition: all 0.3s ease-in; 
+}
+.custom-post-block a.read-more.button:hover{
+	opacity: 0.8;
+}
+.custom-post-thumb img {
+    width: 100%;
+}
+.custom-post-nav-links a {
+    background-color: #405E77;
+    color: #fff;
+    padding: 7px 12px;
+    text-decoration: none;
+} 
+.custom-post-nav-links a:hover,
+.custom-post-nav-links a:visited,
+.custom-post-nav-links a:active,
+.custom-post-nav-links span.page-numbers.current{
+	opacity: 0.8;
+    background-color: #405E77;
+    color: #fff !important; 
+    padding: 7px 12px;
+}
+.custom-post-nav-links {
+    margin-top: 10px;
+    padding-left: 10px;
+}
+@media screen and (max-width:767px){
+.custom-post-block {
+    width: 100%;
+    padding: 0;
+}
+.custom-post-nav-links {
+    padding-left: 0;
+}
+}

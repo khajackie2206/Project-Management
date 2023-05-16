@@ -1,0 +1,165 @@
+/*
+ * Display Custom Post WordPress Plugin CSS For Settings Page
+*/  
+ 
+/* 
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.dash-area {
+	display: flex;
+	width: 98%;
+	position: relative;
+	padding: 20px;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	background-color: #f9f9f9;
+	margin-top: 20px;
+	padding-bottom: 36px;
+}
+.dash-area > div {
+	width: 50%;
+}
+.dash-area .shortcode {
+	padding-top: 5px;
+	background-color: #ddd;
+	text-align: center;
+}
+.dash-area .shortcode-warpper {
+	position: sticky;
+	top: 20px;
+}
+.dash-area .offers {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.dash-area h1 {
+  color: #3b5998;
+}
+.dash-area select {
+  min-width: 450px;
+  width: 450px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+.dash-area input[type="text"],
+.dash-area input[type="number"] {
+    width: 450px;
+    height: 50px;
+    line-height: 35px;
+	  margin-bottom: 10px;
+}
+.dash-area h1 {
+    color: #3b5998;
+    font-size: 21px;
+    line-height: 27px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.dash-area input#dcp_shortcode {
+  float: left;
+  clear: both;
+  margin: 20px 0;
+  width: 20%;
+}
+.dash-area .offers:hover{
+	opacity: 0.9; 
+} 
+.dash-area a#mysubmit {
+  background-color: #3b5998;
+  border-radius: 3px;
+  -moz-border-radius: 3px;  
+  -webkit-border-radius: 3px;
+  color: #fff;
+  padding: 10px 15px;
+  float: left;
+}
+.dash-area .infobox {
+    font-size: 16px;
+    line-height: 29px;
+    margin-top: 25px;
+}
+.dash-area span.highlighted {
+    color: #3b5998;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+}
+.dash-area h3 .metainfo,
+.dash-area .metainfo {
+	font-weight: normal;
+	font-size: 13px;
+	font-style: italic;
+	color: #444;
+}
+.dash-area .optional {
+	font-size: 12px;
+	font-style: italic;
+	color: #222;
+}
+.dash-area a.fancy-button {
+	background-color: #3b5998;
+	color: #fff;
+	display: inline-block;
+	text-align: center;
+	padding: 15px 30px;
+	text-transform: uppercase;
+	margin-top: 20px;
+	border-radius: 4px;
+	font-weight: 600;
+	letter-spacing: 2px;
+	font-size: 17px;
+	line-height: 17px;
+	cursor: pointer;
+}
+.dash-area a.fancy-button:hover{
+  opacity: 0.8;
+}
+.dash-area a.fancy-button.danger{
+  background-color: #FF0000;
+}
+.dash-area .validationError {
+	display: inline-block;
+	background-color: red;
+	padding: 5px 25px;
+	text-align: center;
+	clear: both;
+	color: #fff;
+	margin: 10px 0;
+}
+.dash-area .validationError.hide{
+  display: none;
+}
+.dash-area .dcp_metadata {
+	margin-bottom: 25px;
+}
+.dash-area .dcp_metadata label {
+	padding-right: 20px;
+	vertical-align: top;
+}
+.dash-area .dcp-contact p {
+	font-weight: 600;
+	font-size: 18px;
+	padding: 0 30px;
+	color: #000;
+	line-height: 22px;
+}
+.dash-area .dcp_shortcodeblock{
+	position: relative;
+}
+.dash-area .dcp_shortcodeblock .dashicons {
+	cursor: pointer;
+	position: absolute;
+	right: 50px;
+	top: 15px;
+	transform: rotate(-45deg);
+}
+
+
+
+
+
+
+
