@@ -1,90 +1,128 @@
-
 <?php
-$members = (array) get_post_meta(get_the_ID(), '_members', true);
-// var_dump($members);
-// die;
-$members_details = (array)get_post_meta(get_the_ID(), '_members_details', true);
 
+$projectCounts = count(get_posts([
+    'numberposts' => -1,
+    'post_type' => 'project',
+     'post_status' => 'publish',
+]));
+
+$allProject = get_posts([
+    'numberposts' => -1,
+    'post_type' => 'project',
+    'post_status' => 'publish',
+]);
+
+$projectPending = 0;
+$projectInProgress = 0;
+$projectCompleted = 0;
+
+foreach ($allProject as $project) {
+    $projectStatus = get_post_meta($project->ID, '_status', true);
+    if ($projectStatus == 'pending') {
+        $projectPending++;
+    } elseif ($projectStatus == 'in_progress') {
+        $projectInProgress++;
+    } elseif ($projectStatus == 'completed') {
+        $projectCompleted++;
+    }
+}
 ?>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
-<!-- Link CSS của DataTables -->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.2/datatables.min.css" />
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
 
-<!-- Link JS của DataTables -->
-<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.2/datatables.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 
-<link rel="stylesheet" href="<?= PROJECT_MANAGEMENT_URL ?>/assets/css/style.css">
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<div class="row" style="margin-bottom: 40px;">
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col mt-0">
+                        <h5 class="card-title">Projects</h5>
+                    </div>
 
-<script>
-    jQuery(document).ready(function ($) {
-        // Khởi tạo DataTables cho bảng
-        $('#members-details-table').DataTable({
-            "paging": true, // Cho phép phân trang
-            "lengthChange": false, // Không cho phép thay đổi số lượng bản ghi trên một trang
-            "searching": false, // Không cho phép tìm kiếm
-            "ordering": false, // Không cho phép sắp xếp
-            "info": false, // Không hiển thị thông tin bảng (Ví dụ: Showing 1 to 10 of 57 entries)
-            "autoWidth": false, // Không tự động tính toán chiều rộng cột
-            "data": <?php echo json_encode($members_details); ?>, // Dữ liệu của bảng
-            "columns": [
-                { "data": "image" }, // Cột image
-                { "data": "name" }, // Cột name
-                { "data": "position" } // Cột position
-            ],
-            "columnDefs": [
-                { // Tùy chỉnh hiển thị cột image
-                    "targets": 0,
-                    "render": function (data, type, row, meta) {
-                        return '<img src="' + data + '" width="50" />';
-                    }
-                }
-            ]
-        });
-    });
+                    <div class="col-auto">
+                        <div class="stat text-primary">
+                            <a href="/admin/product/list"><i class="align-middle" data-feather="monitor"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="mt-1 mb-3"> <?= $projectCounts ?></h1>
+                <div class="mb-0" style="padding-bottom: 22px;">
+                    <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col mt-0">
+                        <h5 class="card-title">Pending</h5>
+                    </div>
 
-</script>
+                    <div class="col-auto">
+                        <div class="stat text-primary">
+                            <a href="/admin/users"><i class="align-middle" data-feather="users"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="mt-1 mb-3"><?= $projectPending ?></h1>
+                <div class="mb-0" style="padding-bottom: 22px;">
+                    <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col mt-0">
+                        <h5 class="card-title">In Progress</h5>
+                    </div>
 
-<!-- Hiển thị bảng members detail -->
-<div class="form-group">
-    <table id="members_details_table" class="table">
-        <thead>
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Level</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($members_details as $member): ?>
-       
-                <?php if (!is_null($member) && is_array($member)): ?>
-                    <?php
+                    <div class="col-auto">
+                        <div class="stat text-primary">
+                            <i class="align-middle" data-feather="dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="mt-1 mb-3"><?= $projectInProgress ?></h1>
+                <div class="mb-0" style="padding-bottom: 22px;">
+                    <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col mt-0">
+                        <h5 class="card-title">Completed</h5>
+                    </div>
 
-                    // Truy xuất thông tin chi tiết user dựa trên id
-                    $user = get_user_by('id', $member['member_id']);
-                    // var_dump($user);
-                    // die;
-                    // Lấy đường dẫn hình ảnh (thumbnail) của user
-                    $user_thumbnail_url = get_avatar_url($member['member_id'], array('size' => 'thumbnail'));
-                    ?>
-                    <input type="hidden" value="<?= esc_attr($member['member_id']) ?>" name="members_id[]">
-                    <tr>
-                        <td>
-                            <img src="<?= esc_attr($user_thumbnail_url) ?>" />
-                        </td>
-                        <td>
-                            <?= esc_attr($user->display_name) ?>
-                        </td>
-                        <td>
-                            <input type="text" value="<?= esc_attr($member['member_position']) ?>" name="member_positions[]">
-                        </td>
-                        <td>
-                            <input type="text" value="<?= esc_attr($member['member_level']) ?>" name="member_levels[]">
-                        </td>
-                    </tr>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+                    <div class="col-auto">
+                        <div class="stat text-primary">
+                            <a href="/admin/order/lists"> <i class="align-middle" data-feather="shopping-cart"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <h1 class="mt-1 mb-3"><?= $projectCompleted   ?></h1>
+                <div class="mb-0">
+                    <div class="mb-0" style="padding-bottom: 22px;">
+                        <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

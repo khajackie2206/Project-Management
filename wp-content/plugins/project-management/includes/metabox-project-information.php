@@ -80,7 +80,7 @@ $all_users = get_users();
 
         // Khởi tạo date picker cho 2 trường start_date và end_date
         $('.datepicker').datepicker({
-            dateFormat: 'dd-mm-yy'
+            dateFormat: 'yy-mm-dd'
         });
     });
 </script>

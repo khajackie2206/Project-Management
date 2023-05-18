@@ -4,11 +4,15 @@ class InitProjectManagement
 {
 
     protected $post_type = 'project';
+    protected $new_post_type = 'new';
 
     public function __construct()
     {
         // init register post type
         add_action('init', [$this, 'createProjectPostType']);
+
+        //add new post type and add it in a submenu
+        add_action('init', [$this, 'createNewPostType']);
 
         // Add Project Manager role
         add_role('project manager', 'Project Manager', get_role('author')->capabilities);
@@ -66,6 +70,39 @@ class InitProjectManagement
         register_post_type($this->post_type, $args);
     }
 
+
+    function createNewPostType()
+    {
+        $args = array(
+            'labels' => array(
+                'name' => __('News'),
+                'singular_name' => __('New'),
+                'search_items' => __('Search New'),
+                'view_item' => __('View New'),
+                'not_found' =>  __('No New Found'),
+                'edit' => __('Edit New'),
+                'new_item_name' => __('New'),
+                'add_new_item' => __('Add New'),
+                'edit_item' => __('Update New information')
+            ),
+            'public' => true,
+            'publicly_queryable' => true,
+            'show_ui' => true,
+            'show_in_menu' => 'edit.php?post_type=project',
+            'query_var' => true,
+            'has_archive' => true,
+            'rewrite' => array('slug' => 'service'),
+            'supports' => array('title', 'thumbnail', 'author'),
+            'capability_type' => 'post',
+        );
+
+        register_post_type($this->new_post_type, $args);
+    }
+
+
+
+
+
     /**
      * Show validate errors
      */
@@ -77,13 +114,13 @@ class InitProjectManagement
 
         if (isset($errors) && $errors !== false) {
             foreach ($errors as $error) {
-               ?>
+?>
                 <div class="notice notice-error is-dismissible">
                     <p>
                         <?php echo $error; ?>
                     </p>
                 </div>
-             <?php
+<?php
             }
         }
     }
@@ -147,14 +184,14 @@ class InitProjectManagement
         }
 
         /** If have error */
-        if (sizeof($errors) != 0) {
-            /** Set errors */
-            set_transient('validate_errors', $errors, 60);
+        // if (sizeof($errors) != 0) {
+        //     /** Set errors */
+        //     set_transient('validate_errors', $errors, 60);
 
-            /** Redirect back */
-            $back_location = $_REQUEST['_wp_http_referer'];
-            wp_safe_redirect($back_location);
-            exit();
-        }
+        //     /** Redirect back */
+        //     $back_location = $_REQUEST['_wp_http_referer'];
+        //     wp_safe_redirect($back_location);
+        //     exit();
+        // }
     }
 }

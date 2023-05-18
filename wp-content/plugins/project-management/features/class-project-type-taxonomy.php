@@ -8,7 +8,6 @@ class CustomTaxomony extends InitProjectManagement
         add_action('init', [$this, 'addCustomTaxomony']);
     }
 
-
     function addCustomTaxomony()
     {
 
