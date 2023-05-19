@@ -39,11 +39,11 @@
 <div class="alignleft actions" style="margin-left: 30px;">
     <div class="alignleft actions">Start date:</div>
     <div class="alignleft actions">
-        <input type="text" id="start_date_filter" style="width: 120px;" name="start_date_filter" class="datepicker" />
+        <input type="text" id="start_date_filter" style="width: 180px;" name="start_date_filter" class="datepicker" />
     </div>
     <div class="alignleft actions" style="margin-left: 20px;">End date:</div>
     <div class="alignleft actions">
-        <input type="text" id="end_date_filter" name="end_date_filter" style="width: 120px;" class="datepicker" />
+        <input type="text" id="end_date_filter" name="end_date_filter" style="width: 180px;" class="datepicker" />
     </div>
     <input type="submit" name="" id="filter-date-submit" class="button" value="Filter date" onclick="keepValue()">
 </div>
