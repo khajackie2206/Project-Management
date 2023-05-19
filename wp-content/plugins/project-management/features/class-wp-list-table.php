@@ -95,6 +95,9 @@ class SupportListTable extends WP_List_Table
             $this->table_data = $this->get_table_data('', $filter, $startDate, $endDate);
         }
 
+        //put data to session
+        $_SESSION['table_data'] = $this->table_data;
+
         $columns = $this->get_columns();
         $hidden  = array();
         $sortable = $this->get_sortable_columns();
@@ -127,14 +130,17 @@ class SupportListTable extends WP_List_Table
         $whereClause = "`post_type` = 'project' AND `post_status` = 'publish'";
 
         if (!empty($search)) {
-            return $wpdb->get_results(
+            $data  = $wpdb->get_results(
                 "SELECT ID, post_title from {$table} WHERE `ID` LIKE '%{$search}%' OR `post_title` LIKE '%{$search}%' AND {$whereClause}",
                 ARRAY_A
             );
+            //use javascript to change value of element with ID totalProject by count all data
+            $this->calculateProjectData($data);
+
+            return $data;
         } else {
             $posts = [];
             $postDateRange = [];
-
             if ($status != 'all') {
                 $args = array(
                     'post_type' => 'project', // Loại bài viết bạn muốn lấy
@@ -146,15 +152,17 @@ class SupportListTable extends WP_List_Table
                 $posts = get_posts($args);
                 $ids = implode(',', $posts);
                 $whereClause .= " AND `ID` IN ({$ids})";
-                return $wpdb->get_results(
+                $data = $wpdb->get_results(
                     "SELECT ID, post_title from {$table} WHERE {$whereClause}",
                     ARRAY_A
                 );
+                $this->calculateProjectData($data);
+
+                return $data;
             }
 
             if (!empty($startDate) || !empty($endDate)) {
                 $metaQuery = [];
-
                 $startDateFormat = !empty($startDate) ? DateTime::createFromFormat('d-m-Y', $startDate)->format('Y-m-d') : '';
                 $endDateFormat = !empty($endDate) ? DateTime::createFromFormat('d-m-Y', $endDate)->format('Y-m-d') : '';
                 if (!empty($startDateFormat) && empty($endDateFormat)) {
@@ -184,7 +192,7 @@ class SupportListTable extends WP_List_Table
                             'compare' => '>=',
                             'type'    => 'DATE',
                         ),
-                         array(
+                        array(
                             'key'     => '_end_date',
                             'value'   => $endDateFormat,
                             'compare' => '<=',
@@ -203,10 +211,14 @@ class SupportListTable extends WP_List_Table
                 $postDateRange = implode(',', get_posts($args));
 
                 $whereClause .= " AND `ID` IN ({$postDateRange})";
-                return $wpdb->get_results(
+                $data = $wpdb->get_results(
                     "SELECT ID, post_title from {$table} WHERE {$whereClause}",
                     ARRAY_A
                 );
+                $this->calculateProjectData($data);
+
+                //put data to global
+                return $data;
             }
 
             return $wpdb->get_results(
@@ -214,6 +226,38 @@ class SupportListTable extends WP_List_Table
                 ARRAY_A
             );
         }
+    }
+
+    //function to get return data from function get_table_data and handle count status of project
+    public function calculateProjectData(array $data){
+        $allProject = count($data);
+        $inProgress = 0;
+        $completed = 0;
+        $pending = 0;
+      //forech data to get status of project
+        foreach ($data as $key => $value) {
+            $status = get_post_meta($value['ID'], '_status', true);
+            if ($status == 'in-progress') {
+                $inProgress++;
+            } elseif ($status == 'completed') {
+                $completed++;
+            } else {
+                $pending++;
+            }
+        }
+        //put data to global
+        $this->allProject = $allProject;
+        $this->inProgress = $inProgress;
+        $this->completed = $completed;
+        $this->pending = $pending;
+        //use javascript to change value of element with ID totalProject by count all data
+        echo "<script>document.getElementById('totalProject').innerHTML = {$allProject}</script>";
+        //use javascript to change value of element with ID inProgress by count all data
+        echo "<script>document.getElementById('projectInprogress').innerHTML = {$inProgress}</script>";
+        //use javascript to change value of element with ID completed by count all data
+        echo "<script>document.getElementById('projectCompleted').innerHTML = {$completed}</script>";
+        //use javascript to change value of element with ID pending by count all data
+        echo "<script>document.getElementById('projectPending').innerHTML = {$pending}</script>";
     }
 
     // Add a new method to handle form submission and process bulk action

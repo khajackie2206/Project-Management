@@ -1,3 +1,4 @@
+
 <!-- Link CSS và JS của Select2 -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
@@ -38,13 +39,13 @@
 <div class="alignleft actions" style="margin-left: 30px;">
     <div class="alignleft actions">Start date:</div>
     <div class="alignleft actions">
-        <input type="text" id="start_date_filter" name="start_date_filter" class="datepicker" />
+        <input type="text" id="start_date_filter" style="width: 120px;" name="start_date_filter" class="datepicker" />
     </div>
     <div class="alignleft actions" style="margin-left: 20px;">End date:</div>
     <div class="alignleft actions">
-        <input type="text" id="end_date_filter" name="end_date_filter" class="datepicker" />
+        <input type="text" id="end_date_filter" name="end_date_filter" style="width: 120px;" class="datepicker" />
     </div>
-    <input type="submit" name="" id="filter-date-submit" class="button" value="Filter date range" onclick="keepValue()">
+    <input type="submit" name="" id="filter-date-submit" class="button" value="Filter date" onclick="keepValue()">
 </div>
 <script>
     jQuery(document).ready(function($) {

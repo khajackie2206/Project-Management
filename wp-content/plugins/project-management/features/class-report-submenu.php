@@ -33,7 +33,7 @@ class CreateReportSubmenu extends InitProjectManagement
 
         $table = new SupportListTable();
 
-        echo '<div class="wrap"><h2>Projects Analyst</h2>';
+        echo '<div class="wrap"><h2>PROJECT ANALYST</h2>';
         echo '<style>#the-list .row-actions{left:0;}</style>';
 
         $table->prepare_items();

@@ -1,4 +1,9 @@
 <?php
+//start session
+
+$projectPending = 0;
+$projectInProgress = 0;
+$projectCompleted = 0;
 
 $projectCounts = count(get_posts([
     'numberposts' => -1,
@@ -12,9 +17,6 @@ $allProject = get_posts([
     'post_status' => 'publish',
 ]);
 
-$projectPending = 0;
-$projectInProgress = 0;
-$projectCompleted = 0;
 
 foreach ($allProject as $project) {
     $projectStatus = get_post_meta($project->ID, '_status', true);
@@ -39,9 +41,9 @@ foreach ($allProject as $project) {
 <!-- Latest compiled JavaScript -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <div class="row" style="margin-bottom: 40px;">
-    <div class="col-sm-3">
-        <div class="card">
-            <div class="card-body">
+    <div class="col-sm-3" >
+        <div class="card" style="background-color: #17a2b8;">
+            <div class="card-body" style="color:white;">
                 <div class="row">
                     <div class="col mt-0">
                         <h5 class="card-title">Projects</h5>
@@ -53,7 +55,7 @@ foreach ($allProject as $project) {
                         </div>
                     </div>
                 </div>
-                <h1 class="mt-1 mb-3"> <?= $projectCounts ?></h1>
+                <h1 class="mt-1 mb-3" style="color: white;" id="totalProject"> <?= $projectCounts ?></h1>
                 <div class="mb-0" style="padding-bottom: 22px;">
                     <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span>
                 </div>
@@ -61,11 +63,11 @@ foreach ($allProject as $project) {
         </div>
     </div>
     <div class="col-sm-3">
-        <div class="card">
+        <div class="card" style="background-color: #28a745;">
             <div class="card-body">
                 <div class="row">
                     <div class="col mt-0">
-                        <h5 class="card-title">Pending</h5>
+                        <h5 class="card-title" style="color: white;">Pending</h5>
                     </div>
 
                     <div class="col-auto">
@@ -74,7 +76,7 @@ foreach ($allProject as $project) {
                         </div>
                     </div>
                 </div>
-                <h1 class="mt-1 mb-3"><?= $projectPending ?></h1>
+                <h1 class="mt-1 mb-3" style="color: white;"  id="projectPending"><?= $projectPending ?></h1>
                 <div class="mb-0" style="padding-bottom: 22px;">
                     <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span>
                 </div>
@@ -82,11 +84,11 @@ foreach ($allProject as $project) {
         </div>
     </div>
     <div class="col-sm-3">
-        <div class="card">
+        <div class="card" style="background-color: #ffc107;">
             <div class="card-body">
                 <div class="row">
                     <div class="col mt-0">
-                        <h5 class="card-title">In Progress</h5>
+                        <h5 class="card-title" style="color: white;">In Progress</h5>
                     </div>
 
                     <div class="col-auto">
@@ -95,19 +97,19 @@ foreach ($allProject as $project) {
                         </div>
                     </div>
                 </div>
-                <h1 class="mt-1 mb-3"><?= $projectInProgress ?></h1>
-                <div class="mb-0" style="padding-bottom: 22px;">
+                <h1 class="mt-1 mb-3" style="color: white;" id="projectInprogress"><?= $projectInProgress ?></h1>
+                <div class="mb-0" style="padding-bottom: 22px; ">
                     <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-sm-3">
-        <div class="card">
+        <div class="card" style="background-color: #dc3545;">
             <div class="card-body">
                 <div class="row">
                     <div class="col mt-0">
-                        <h5 class="card-title">Completed</h5>
+                        <h5 class="card-title" style="color: white;">Completed</h5>
                     </div>
 
                     <div class="col-auto">
@@ -116,7 +118,7 @@ foreach ($allProject as $project) {
                         </div>
                     </div>
                 </div>
-                <h1 class="mt-1 mb-3"><?= $projectCompleted   ?></h1>
+                <h1 class="mt-1 mb-3" style="color: white;" id="projectCompleted"><?= $projectCompleted   ?></h1>
                 <div class="mb-0">
                     <div class="mb-0" style="padding-bottom: 22px;">
                         <span class="text-danger"> <i class="mdi mdi-arrow-bottom-right"></i> </span>
