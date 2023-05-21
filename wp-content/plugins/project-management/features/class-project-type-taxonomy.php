@@ -5,12 +5,11 @@ class CustomTaxomony extends InitProjectManagement
     public function __construct()
     {
         // Add custom taxonomy
-        add_action('init', [$this, 'addCustomTaxomony']);
+        add_action('init', [$this, 'add_custom_taxomony']);
     }
 
-    function addCustomTaxomony()
+    function add_custom_taxomony()
     {
-
         $labels = array(
             'name'              => __('Project type'),
             'singular_name'     => __('Project type'),

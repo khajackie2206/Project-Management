@@ -9,23 +9,19 @@ class InitProjectManagement
     public function __construct()
     {
         // init register post type
-        add_action('init', [$this, 'createProjectPostType']);
-
-        //add new post type and add it in a submenu
-        add_action('init', [$this, 'createNewPostType']);
+        add_action('init', [$this, 'create_project_post_type']);
 
         // Add Project Manager role
         add_role('project manager', 'Project Manager', get_role('author')->capabilities);
 
         // Validate input before update project data
-        add_action('pre_post_update', [$this, 'validateProjectData']);
+        add_action('pre_post_update', [$this, 'validate_project_data']);
 
         // Show error notice when validate fail
-        add_action('admin_notices', [$this, 'showValidateNotices']);
+        add_action('admin_notices', [$this, 'show_validate_notices']);
 
         // Replace title
-        add_filter('enter_title_here', [$this, 'customTitle'], 10, 2);
-
+        add_filter('enter_title_here', [$this, 'custom_title'], 10, 2);
 
         // require_once PROJECT_MANAGEMENT_PATH . '/features/class-custom-author-box.php';
         require_once PROJECT_MANAGEMENT_PATH . '/features/class-custom-metabox.php';
@@ -37,7 +33,7 @@ class InitProjectManagement
         $this->validateByScript();
     }
 
-    function createProjectPostType()
+    function create_project_post_type()
     {
         $args = array(
             'labels' => array(
@@ -70,43 +66,10 @@ class InitProjectManagement
         register_post_type($this->post_type, $args);
     }
 
-
-    function createNewPostType()
-    {
-        $args = array(
-            'labels' => array(
-                'name' => __('News'),
-                'singular_name' => __('New'),
-                'search_items' => __('Search New'),
-                'view_item' => __('View New'),
-                'not_found' =>  __('No New Found'),
-                'edit' => __('Edit New'),
-                'new_item_name' => __('New'),
-                'add_new_item' => __('Add New'),
-                'edit_item' => __('Update New information')
-            ),
-            'public' => true,
-            'publicly_queryable' => true,
-            'show_ui' => true,
-            'show_in_menu' => 'edit.php?post_type=project',
-            'query_var' => true,
-            'has_archive' => true,
-            'rewrite' => array('slug' => 'service'),
-            'supports' => array('title', 'thumbnail', 'author'),
-            'capability_type' => 'post',
-        );
-
-        register_post_type($this->new_post_type, $args);
-    }
-
-
-
-
-
     /**
      * Show validate errors
      */
-    public function showValidateNotices()
+    public function show_validate_notices()
     {
         /** Get and remove message (Just like Flash message) */
         $errors = get_transient('validate_errors');
@@ -125,7 +88,7 @@ class InitProjectManagement
         }
     }
 
-    function customTitle($placeholder, $post)
+    function custom_title($placeholder, $post)
     {
         if ($this->post_type === $post->post_type) {
             $placeholder = 'Enter your project name';
@@ -168,7 +131,7 @@ class InitProjectManagement
     /**
      * Validate player form data. Check if user filled squad number, nationality and suburbs
      */
-    public function validateProjectData()
+    public function validate_project_data()
     {
         /** Don't check if delete player */
         if (isset($_GET['action']) && $_GET['action'] == 'trash') {
