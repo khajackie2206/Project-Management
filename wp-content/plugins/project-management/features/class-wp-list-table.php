@@ -22,12 +22,12 @@ class SupportListTable extends WP_List_Table
         $columns = array(
             'ID'   => __('ID', 'supporthost-cookie-consent'),
             'project_name'  => __('Project Name', 'supporthost-cookie-consent'),
-            'Image'  => __('Image', 'supporthost-cookie-consent'),
-            'Description'   => __('Description', 'supporthost-cookie-consent'),
-            'Start Date'   => __('Start Date', 'supporthost-cookie-consent'),
-            'End Date'  => __('End Date', 'supporthost-cookie-consent'),
-            'Status'  => __('Status', 'supporthost-cookie-consent'),
-            'Type'  => __('Type', 'supporthost-cookie-consent')
+            'image'  => __('Image', 'supporthost-cookie-consent'),
+            'description'   => __('Description', 'supporthost-cookie-consent'),
+            'start_date'   => __('Start Date', 'supporthost-cookie-consent'),
+            'end_date'  => __('End Date', 'supporthost-cookie-consent'),
+            'status'  => __('Status', 'supporthost-cookie-consent'),
+            'type'  => __('Type', 'supporthost-cookie-consent')
         );
 
         return $columns;
@@ -87,13 +87,9 @@ class SupportListTable extends WP_List_Table
         $filter = isset($_POST['filter']) ? $_POST['filter'] : 'all';
         $startDate = isset($_POST['start_date_filter']) ? $_POST['start_date_filter'] : '';
         $endDate = isset($_POST['end_date_filter']) ? $_POST['end_date_filter'] : '';
+        $search = isset($_POST['s']) ? $_POST['s'] : '';
 
-        //data
-        if (!empty($_POST['s'])) {
-            $this->table_data = $this->get_table_data($_POST['s'], $filter, '', '');
-        } else {
-            $this->table_data = $this->get_table_data('', $filter, $startDate, $endDate);
-        }
+        $this->table_data = $this->get_table_data($search, $filter, $startDate, $endDate);
 
         //put data to session
         $_SESSION['table_data'] = $this->table_data;
@@ -135,7 +131,7 @@ class SupportListTable extends WP_List_Table
                 ARRAY_A
             );
             //use javascript to change value of element with ID totalProject by count all data
-            $this->calculateProjectData($data);
+            $this->calculate_report_data($data);
 
             return $data;
         } else {
@@ -156,7 +152,7 @@ class SupportListTable extends WP_List_Table
                     "SELECT ID, post_title from {$table} WHERE {$whereClause}",
                     ARRAY_A
                 );
-                $this->calculateProjectData($data);
+                $this->calculate_report_data($data);
 
                 return $data;
             }
@@ -215,7 +211,7 @@ class SupportListTable extends WP_List_Table
                     "SELECT ID, post_title from {$table} WHERE {$whereClause}",
                     ARRAY_A
                 );
-                $this->calculateProjectData($data);
+                $this->calculate_report_data($data);
 
                 //put data to global
                 return $data;
@@ -229,12 +225,13 @@ class SupportListTable extends WP_List_Table
     }
 
     //function to get return data from function get_table_data and handle count status of project
-    public function calculateProjectData(array $data){
+    public function calculate_report_data(array $data)
+    {
         $allProject = count($data);
         $inProgress = 0;
         $completed = 0;
         $pending = 0;
-      //forech data to get status of project
+        //forech data to get status of project
         foreach ($data as $key => $value) {
             $status = get_post_meta($value['ID'], '_status', true);
             if ($status == 'in-progress') {
@@ -287,27 +284,27 @@ class SupportListTable extends WP_List_Table
             case 'project_name':
                 echo '<strong>' . $item['post_title'] . '</strong>';
                 return;
-            case 'Image':
+            case 'image':
                 $image = get_the_post_thumbnail_url($item['ID']);
                 echo '<img src="' . $image . '" width="50px">';
                 return;
-            case 'Description':
+            case 'description':
                 $description = get_post_meta($item['ID'], '_description', true);
                 echo '<strong>' . $description . '</strong>';
                 return;
-            case 'Start Date':
+            case 'start_date':
                 $startDate = get_post_meta($item['ID'], '_start_date', true);
                 echo '<strong>' . $startDate . '</strong>';
                 return;
-            case 'End Date':
+            case 'end_date':
                 $endDate = get_post_meta($item['ID'], '_end_date', true);
                 echo '<strong>' . $endDate . '</strong>';
                 return;
-            case 'Status':
+            case 'status':
                 $endDate = get_post_meta($item['ID'], '_status', true);
                 echo '<div>' . $endDate . '</div>';
                 return;
-            case 'Type':
+            case 'type':
                 echo '<div>' . $terms . '</div>';
                 return;
             default:

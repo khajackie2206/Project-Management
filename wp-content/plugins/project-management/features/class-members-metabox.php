@@ -1,18 +1,18 @@
 <?php
 
-class CustomMembersMetaBox extends InitProJectManagement
+class custom_members_metabox extends InitProJectManagement
 {
     public function __construct()
     {
         // Add meta box members
-        add_action('add_meta_boxes', [$this, 'CustomMembersMetaBox']);
-        add_action('save_post', [$this, 'saveCustomMembersMetabox'], 30);
+        add_action('add_meta_boxes', [$this, 'custom_members_metabox']);
+        add_action('save_post', [$this, 'save_custom_members_metabox'], 30);
     }
 
     /**************************************************
      * Start Customize meta box for members
      **************************************************/
-    public function CustomMembersMetaBox()
+    public function custom_members_metabox()
     {
         add_meta_box(
             // ID của metabox, phải là duy nhất
@@ -20,7 +20,7 @@ class CustomMembersMetaBox extends InitProJectManagement
             // Tiêu đề của metabox
             'Members infomation',
             // Callback function để hiển thị nội dung metabox
-            [$this, 'customMembersMetaboxCallback'],
+            [$this, 'custom_members_metabox_callback'],
             // Tên của custom post type mà bạn muốn thêm metabox vào
             $this->post_type,
             // Vị trí của metabox: normal (bên cạnh editor), side (ở bên phải) hoặc advanced (ở dưới editor)
@@ -30,13 +30,13 @@ class CustomMembersMetaBox extends InitProJectManagement
         );
     }
 
-    public function customMembersMetaboxCallback($post)
+    public function custom_members_metabox_callback($post)
     {
         require_once PROJECT_MANAGEMENT_PATH . 'includes/metabox-members.php';
     }
 
     // Lưu giá trị của các trường trong metabox khi lưu post
-    public function saveCustomMembersMetabox($post_id)
+    public function save_custom_members_metabox($post_id)
     {
         // Kiểm tra quyền hạn của user
         if (!current_user_can('edit_post', $post_id)) {
@@ -56,4 +56,4 @@ class CustomMembersMetaBox extends InitProJectManagement
      **************************************************/
 }
 
-new CustomMembersMetaBox();
+new custom_members_metabox();

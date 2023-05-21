@@ -6,16 +6,15 @@ class CustomProjectManagementMetabox extends InitProjectManagement
     public function __construct()
     {
         // Add meta box project information 
-        add_action('add_meta_boxes', [$this, 'customProjectMetabox']);
-        add_action('save_post', [$this, 'saveCustomProjectMetabox'], 20);
+        add_action('add_meta_boxes', [$this, 'custom_project_metabox']);
+        add_action('save_post', [$this, 'save_custom_project_metabox'], 20);
     }
 
     /**************************************************
      * Start Customize meta box project information
      **************************************************/
 
-
-    function customProjectMetabox()
+    function custom_project_metabox()
     {
         add_meta_box(
             // ID của metabox, phải là duy nhất
@@ -23,7 +22,7 @@ class CustomProjectManagementMetabox extends InitProjectManagement
             // Tiêu đề của metabox
             'Project infomation',
             // Callback function để hiển thị nội dung metabox
-            [$this, 'customProjectMetaboxCallback'],
+            [$this, 'custom_project_metabox_callback'],
             // Tên của custom post type mà bạn muốn thêm metabox vào
             $this->post_type,
             // Vị trí của metabox: normal (bên cạnh editor), side (ở bên phải) hoặc advanced (ở dưới editor)
@@ -33,14 +32,13 @@ class CustomProjectManagementMetabox extends InitProjectManagement
         );
     }
 
-    function customProjectMetaboxCallback()
+    function custom_project_metabox_callback()
     {
         require_once PROJECT_MANAGEMENT_PATH . 'includes/metabox-project-information.php';
     }
 
-
     // Lưu giá trị của các trường trong metabox khi lưu post
-    function saveCustomProjectMetabox($post_id)
+    function save_custom_project_metabox($post_id)
     {
         if (!current_user_can('edit_post', $post_id)) {
             return;

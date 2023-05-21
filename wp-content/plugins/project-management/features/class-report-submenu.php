@@ -5,13 +5,13 @@ class CreateReportSubmenu extends InitProjectManagement
 {
     public function __construct()
     {
-        add_action('admin_menu', [$this, 'addNewReportSubmenu']);
+        add_action('admin_menu', [$this, 'add_new_report_sub_menu']);
         // add_action('manage_users_extra_tablenav', [$this, 'my_author_filter']);
         // add_action('pre_get_posts', [$this, 'my_author_filter_results']);
         // add_action('admin_menu', 'my_add_menu_items');
     }
 
-    public function addNewReportSubmenu()
+    public function add_new_report_sub_menu()
     {
         add_submenu_page(
             'edit.php?post_type=project',
@@ -48,30 +48,6 @@ class CreateReportSubmenu extends InitProjectManagement
         $table->display();
 
         echo '</div></form>';
-    }
-
-    // add screen options
-    public function supporthost_sample_screen_options()
-    {
-
-        global $supporthost_sample_page;
-        global $table;
-
-        $screen = get_current_screen();
-
-        // get out of here if we are not on our settings page
-        if (!is_object($screen) || $screen->id != $supporthost_sample_page) {
-            return;
-        }
-
-        $args = array(
-            'label' => __('Elements per page', 'supporthost-admin-table'),
-            'default' => 2,
-            'option' => 'elements_per_page'
-        );
-        add_screen_option('per_page', $args);
-
-        $table = new CreateReportSubmenu();
     }
 }
 

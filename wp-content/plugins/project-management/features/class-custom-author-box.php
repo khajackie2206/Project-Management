@@ -7,30 +7,29 @@ class CustomAuthor extends InitProjectManagement
     public function __construct()
     {
         // Replace box author
-        add_action('remove_author_metabox', [$this, 'removeCustomPostAuthorMetabox']);
-        add_action('add_meta_boxes', [$this, 'addCustomPostAuthorMetabox']);
-        add_action('save_post', [$this, 'saveCustomPostAuthorMetabox'], 10);
+        add_action('remove_author_metabox', [$this, 'remove_custom_post_author_metabox']);
+        add_action('add_meta_boxes', [$this, 'add_custom_post_author_metabox']);
+        add_action('save_post', [$this, 'save_custom_post_author_metabox'], 10);
     }
 
-
-    function removeCustomPostAuthorMetabox()
+    function remove_custom_post_author_metabox()
     {
         remove_meta_box('authordiv', $this->post_type, 'normal');
     }
 
-    function addCustomPostAuthorMetabox()
+    function add_custom_post_author_metabox()
     {
         add_meta_box(
             'custom_post_author',
             __('Author', 'textdomain'),
-            [$this, 'customPostAuthorMetaboxCallback'],
+            [$this, 'custom_post_author_metabox_callback'],
             $this->post_type,
             'side',
             'low'
         );
     }
 
-    function customPostAuthorMetaboxCallback($post)
+    function custom_post_author_metabox_callback($post)
     {
         $authors = get_users(
             array(
@@ -62,13 +61,12 @@ class CustomAuthor extends InitProjectManagement
 <?php
     }
 
-
-    function saveCustomPostAuthorMetabox($post_id)
+    function save_custom_post_author_metabox($post_id)
     {
         if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
             return;
         }
-  
+
         if (isset($_POST['post_author']) && $_POST['post_author']) {
             $new_author_id = sanitize_text_field($_POST['post_author']);
             if ($new_author_id) {
@@ -84,4 +82,3 @@ class CustomAuthor extends InitProjectManagement
 }
 
 new CustomAuthor();
-
