@@ -1,0 +1,55 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "create-block/basic-block",
+  "version": "0.1.0",
+  "title": "Basic Block",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "Example block scaffolded with Create Block tool.",
+  "supports": {
+    "html": false,
+    "color": {
+      "gradients": true
+    }
+  },
+  "attributes": {
+    "content": {
+      "type": "string",
+      "source": "html",
+      "selector": "div"
+    },
+    "align": {
+      "type": "string",
+      "default": "none"
+    },
+    "heading": {
+      "type": "string"
+    },
+    "iconName": {
+      "type": "string"
+    },
+    "showHeading": {
+      "type": "boolean"
+    }
+  },
+  "styles": [
+    {
+      "name": "default",
+      "label": "Default",
+      "isDefault": true
+    },
+    {
+      "name": "red",
+      "label": "Red"
+    },
+    {
+      "name": "green",
+      "label": "Green"
+    }
+  ],
+  "textdomain": "basic-block",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css"
+}
